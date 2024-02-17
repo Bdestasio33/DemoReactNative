@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { Button } from "@rneui/base";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import CalculatorScreen from "./components/calculator/Calculator";
+import NumberFinderScreen from "./components/numberFinder/NumberFinder";
+import "react-native-gesture-handler";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Calculator">
+        <Drawer.Screen
+          name="Calculator"
+          component={CalculatorScreen}
+          options={{
+            headerRight: () => (
+              <Button
+                onPress={() => alert("This is a simple alert from navigation")}
+                title="Info"
+                color="#3d3d3d"
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen name="Number Finder" component={NumberFinderScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
